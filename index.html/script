@@ -1,0 +1,6 @@
+h2: "Hydrogen is used to create methanol.",
+o2: "Oxygen can be released or used for energy.",
+h2o: "Water can be recycled back into the system.",
+setTimeout(() => {
+    el.classList.remove("activeArrow");
+}, 2000);

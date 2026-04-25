@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Artificial Photosynthesis</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: linear-gradient(135deg, #020617, #0f172a);
+    color: white;
+    text-align: center;
+}
+
+.row { margin: 20px; }
+
+.inner { display: inline-block; }
+
+.box {
+    border: 2px solid #38bdf8;
+    background: rgba(30,41,59,0.6);
+    padding: 15px;
+    margin: 10px;
+    display: inline-block;
+    width: 160px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.box:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 10px #38bdf8;
+}
+
+/* highlight */
+.inner.activeStep {
+    box-shadow: 0 0 15px #4ade80;
+    border-radius: 12px;
+}
+
+/* arrow */
+.arrow {
+    font-size: 30px;
+    opacity: 0.2;
+    transition: 0.3s;
+}
+
+.activeArrow {
+    opacity: 1;
+    color: #4ade80;
+}
+
+#desc {
+    margin-top: 20px;
+    color: #4ade80;
+    font-size: 18px;
+}
+
+button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    font-size: 16px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🌱 Artificial Photosynthesis System</h1>
+
+<div id="input" class="row">
+  <div class="inner">
+    <div class="box" onclick="desc('sun')">☀️<br>Sunlight</div>
+    <div class="box" onclick="desc('water')">💧<br>H₂O</div>
+    <div class="box" onclick="desc('co2')">🌫️<br>CO₂</div>
+  </div>
+</div>
+
+<div class="arrow" id="a1">⬇️</div>
+
+<div id="reactor" class="row">
+  <div class="inner">
+    <div class="box" onclick="desc('reactor')">🧪<br>Photoreactor</div>
+    <div class="box" onclick="desc('split')">⚗️<br>Water Splitting</div>
+  </div>
+</div>
+
+<div class="arrow" id="a2">⬇️</div>
+
+<div id="output" class="row">
+  <div class="inner">
+    <div class="box" onclick="desc('h2')">🫧<br>H₂</div>
+    <div class="box" onclick="desc('o2')">🌬️<br>O₂</div>
+    <div class="box" onclick="desc('h2o')">💧<br>H₂O</div>
+  </div>
+</div>
+
+<h2>Outside System</h2>
+
+<div id="outside" class="row">
+  <div class="inner">
+    <div class="box" onclick="desc('methanol')">🧪<br>Methanol</div>
+    <div class="box" onclick="desc('fuel')">⚡<br>Electricity</div>
+    <div class="box" onclick="desc('recycle')">♻️<br>Recycle</div>
+  </div>
+</div>
+
+<button onclick="run()">Run Animation</button>
+
+<div id="desc"></div>
+
+<script>
+
+// description
+function desc(type) {
+    let d = {
+        sun: "Sunlight provides the energy for the system.",
+        water: "Water is the source of hydrogen.",
+        co2: "CO₂ is captured from the environment.",
+        reactor: "The photoreactor drives reactions using sunlight.",
+        split: "Water splits into hydrogen and oxygen.",
+        h2: "Hydrogen is used to create fuel.",
+        o2: "Oxygen is released or used.",
+        h2o: "Water is reused.",
+        methanol: "Hydrogen + CO₂ form methanol.",
+        fuel: "Methanol generates electricity.",
+        recycle: "CO₂ and H₂O are recycled."
+    };
+    document.getElementById("desc").innerHTML = d[type];
+}
+
+// helper delay
+function wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// highlight row
+async function highlightStep(id) {
+    let el = document.querySelector("#" + id + " .inner");
+    el.classList.add("activeStep");
+    await wait(1500);
+    el.classList.remove("activeStep");
+}
+
+// arrow flash
+async function flashArrow(id) {
+    let el = document.getElementById(id);
+    el.classList.add("activeArrow");
+    await wait(1500);
+    el.classList.remove("activeArrow");
+}
+
+// MAIN animation (TUẦN TỰ, KHÔNG LỖI)
+async function run() {
+    await highlightStep("input");
+    await flashArrow("a1");
+    await highlightStep("reactor");
+    await flashArrow("a2");
+    await highlightStep("output");
+}
+
+</script>
+
+</body>
+</html>
